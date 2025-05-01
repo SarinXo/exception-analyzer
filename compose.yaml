@@ -1,9 +1,10 @@
 services:
   postgres:
     image: 'postgres:latest'
+    #todo .env file
     environment:
-      - 'POSTGRES_DB=mydatabase'
-      - 'POSTGRES_PASSWORD=secret'
-      - 'POSTGRES_USER=myuser'
+      - 'POSTGRES_DB=exception-analyzer-db'
+      - 'POSTGRES_PASSWORD=admin'
+      - 'POSTGRES_USER=admin'
     ports:
       - '5432'
