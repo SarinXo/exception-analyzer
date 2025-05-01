@@ -1,3 +1,6 @@
 spring:
   application:
     name: exception-analyzer
+  threads:
+    virtual:
+      enabled: true
