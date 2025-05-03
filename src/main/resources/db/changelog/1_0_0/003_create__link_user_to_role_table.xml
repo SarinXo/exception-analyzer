@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <changeSet id="3-create-link-user-to-role" author="SarinXo">
+
+        <createTable tableName="link_user_to_role">
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="role_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey
+                columnNames="user_id, role_id"
+                constraintName="pk_link_user_to_role"
+                tableName="link_user_to_role"/>
+
+        <addForeignKeyConstraint
+                baseTableName="link_user_to_role"
+                baseColumnNames="user_id"
+                referencedTableName="app_user"
+                referencedColumnNames="id"
+                constraintName="fk_user_to_link"
+                onDelete="CASCADE"/>
+
+        <addForeignKeyConstraint
+                baseTableName="link_user_to_role"
+                baseColumnNames="role_id"
+                referencedTableName="app_role"
+                referencedColumnNames="id"
+                constraintName="fk_role_to_link"
+                onDelete="CASCADE"/>
+    </changeSet>
+
+</databaseChangeLog>
