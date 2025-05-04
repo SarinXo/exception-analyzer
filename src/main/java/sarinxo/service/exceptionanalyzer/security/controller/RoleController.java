@@ -6,11 +6,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import sarinxo.service.exceptionanalyzer.security.dto.CreateRoleResponse;
 import sarinxo.service.exceptionanalyzer.security.service.AppRoleService;
 
 @Controller
 @RequiredArgsConstructor
+@RequestMapping("/roles")
 public class RoleController {
 
     private AppRoleService service;

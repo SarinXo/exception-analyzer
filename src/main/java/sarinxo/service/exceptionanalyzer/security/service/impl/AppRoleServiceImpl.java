@@ -8,6 +8,8 @@ import sarinxo.service.exceptionanalyzer.security.mapper.AppRoleMapper;
 import sarinxo.service.exceptionanalyzer.security.repository.AppRoleRepository;
 import sarinxo.service.exceptionanalyzer.security.service.AppRoleService;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class AppRoleServiceImpl implements AppRoleService {
@@ -27,5 +29,10 @@ public class AppRoleServiceImpl implements AppRoleService {
     @Override
     public void delete(Long id) {
         repository.deleteById(id);
+    }
+
+    @Override
+    public List<AppRole> findByIds(List<Long> ids) {
+        return repository.findAllById(ids);
     }
 }
