@@ -10,12 +10,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 import sarinxo.service.exceptionanalyzer.security.dto.AssignRolesRequest;
 import sarinxo.service.exceptionanalyzer.security.dto.CreateUserRequest;
 import sarinxo.service.exceptionanalyzer.security.dto.CreateUserResponse;
 import sarinxo.service.exceptionanalyzer.security.service.AppUserService;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 @RequestMapping("/users")
 public class UserController {

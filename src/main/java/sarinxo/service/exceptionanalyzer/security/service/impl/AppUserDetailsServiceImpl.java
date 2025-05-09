@@ -3,6 +3,7 @@ package sarinxo.service.exceptionanalyzer.security.service.impl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import sarinxo.service.exceptionanalyzer.security.dto.AssignRolesRequest;
 import sarinxo.service.exceptionanalyzer.security.dto.CreateUserRequest;
@@ -17,6 +18,7 @@ import sarinxo.service.exceptionanalyzer.security.service.AppUserService;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Service
@@ -26,6 +28,7 @@ public class AppUserDetailsServiceImpl implements AppUserService {
     private final AppUserRepository userRepository;
     private final AppRoleService roleService;
     private final AppUserMapper mapper;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -42,9 +45,11 @@ public class AppUserDetailsServiceImpl implements AppUserService {
             throw new IllegalArgumentException("Can't create user " + request.getUsername() + " because they already exist!");
         }
 
+        String password = passwordEncoder.encode(request.getPassword());
+
         AppUser newUser = AppUser.builder()
                 .username(request.getUsername())
-                .password(request.getPassword())
+                .password(password)
                 .build();
 
         AppUser savedUser = userRepository.save(newUser);
@@ -72,7 +77,7 @@ public class AppUserDetailsServiceImpl implements AppUserService {
         List<AppRole> finalRoles = Stream.of(appUser.getAuthorities(), roles)
                 .flatMap(List::stream)
                 .distinct()
-                .toList();
+                .collect(Collectors.toList());
 
         appUser.setAuthorities(finalRoles);
         userRepository.save(appUser);

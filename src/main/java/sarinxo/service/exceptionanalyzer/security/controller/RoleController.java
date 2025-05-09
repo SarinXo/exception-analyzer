@@ -6,23 +6,23 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import sarinxo.service.exceptionanalyzer.security.dto.CreateRoleRequest;
 import sarinxo.service.exceptionanalyzer.security.dto.CreateRoleResponse;
 import sarinxo.service.exceptionanalyzer.security.service.AppRoleService;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 @RequestMapping("/roles")
 public class RoleController {
 
-    private AppRoleService service;
+    private final AppRoleService service;
 
-    @PostMapping("/{roleName}")
-    public CreateRoleResponse createRole(
-            @PathVariable
-            @Pattern(regexp = "^ROLE_[A-Z]+$", message = "the role must fit the pattern '^ROLE_[A-Z]+$'")
-            String roleName ) {
-        return service.create(roleName);
+    @PostMapping
+    public CreateRoleResponse createRole(@RequestBody CreateRoleRequest request) {
+        return service.create(request);
     }
 
     @DeleteMapping("{id}")
