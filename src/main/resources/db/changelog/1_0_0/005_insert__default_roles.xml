@@ -8,12 +8,10 @@
     <changeSet id="5-insert-roles" author="SarinXo">
 
         <insert tableName="app_role">
-            <column name="id" value="1"/>
             <column name="authority" value="ROLE_ADMIN"/>
         </insert>
 
         <insert tableName="app_role">
-            <column name="id" value="2"/>
             <column name="authority" value="ROLE_DEBUGMAN"/>
         </insert>
 
