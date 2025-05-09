@@ -2,6 +2,7 @@ package sarinxo.service.exceptionanalyzer.security.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import sarinxo.service.exceptionanalyzer.security.dto.CreateRoleRequest;
 import sarinxo.service.exceptionanalyzer.security.dto.CreateRoleResponse;
 import sarinxo.service.exceptionanalyzer.security.entity.AppRole;
 import sarinxo.service.exceptionanalyzer.security.mapper.AppRoleMapper;
@@ -18,8 +19,8 @@ public class AppRoleServiceImpl implements AppRoleService {
     private final AppRoleMapper mapper;
 
     @Override
-    public CreateRoleResponse create(String roleName) {
-        AppRole role = AppRole.builder().authority(roleName).build();
+    public CreateRoleResponse create(CreateRoleRequest request) {
+        AppRole role = AppRole.builder().authority(request.getRole()).build();
 
         AppRole savedRole = repository.save(role);
 
