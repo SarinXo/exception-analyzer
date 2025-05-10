@@ -3,6 +3,7 @@ package sarinxo.service.exceptionanalyzer.security.entity;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -47,7 +48,16 @@ public class AppUser implements UserDetails {
     @ToString.Exclude
     private String password;
 
-    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @ManyToMany(
+            cascade =
+                    {
+                            CascadeType.DETACH,
+                            CascadeType.MERGE,
+                            CascadeType.PERSIST,
+                            CascadeType.REFRESH
+                    },
+            fetch = FetchType.EAGER
+    )
     @JoinTable(
             name = "link_user_to_role",
             joinColumns = {@JoinColumn(name = "user_id")},

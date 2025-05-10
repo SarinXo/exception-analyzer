@@ -8,13 +8,11 @@
     <changeSet id="4-insert-users" author="SarinXo">
 
         <insert tableName="app_user">
-            <column name="id" value="1"/>
             <column name="username" value="admin"/>
             <column name="password" value="$2a$10$dLDw/fBnoL16SP3ElaqAMueHVDCKfERgtJEVclCy.YOEpJz7/0/PW" /><!--admin-->
         </insert>
 
         <insert tableName="app_user">
-            <column name="id" value="2"/>
             <column name="username" value="debugMan"/>
             <column name="password" value="$2a$10$PhZXq7Sn/e04JxJg4MLTEuV003lrxY/UxAMvep1ztBDZzv0T7swXO" /><!--1234-->
         </insert>

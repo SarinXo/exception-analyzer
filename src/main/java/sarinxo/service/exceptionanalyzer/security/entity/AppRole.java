@@ -14,6 +14,8 @@ import lombok.Setter;
 import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 
+import java.util.Objects;
+
 @Entity
 @ToString
 @Getter
@@ -32,4 +34,16 @@ public class AppRole implements GrantedAuthority {
     @ToString.Exclude
     private String authority;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        AppRole appRole = (AppRole) o;
+        return Objects.equals(id, appRole.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, authority);
+    }
 }
