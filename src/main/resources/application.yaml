@@ -22,3 +22,11 @@ spring:
     enabled: true
     change-log: db/changelog/db.changelog-master.xml
 
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: exception-events
+      key-deserializer: org.apache.kafka.common.serialization.UUIDSerializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: "*"
