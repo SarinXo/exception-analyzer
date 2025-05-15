@@ -1,4 +1,4 @@
-package sarinxo.service.exceptionanalyzer.consumer;
+package sarinxo.service.exceptionanalyzer.consumer.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

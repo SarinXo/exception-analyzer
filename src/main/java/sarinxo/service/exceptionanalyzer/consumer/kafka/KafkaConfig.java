@@ -1,24 +1,23 @@
-package sarinxo.service.exceptionanalyzer.consumer;
+package sarinxo.service.exceptionanalyzer.consumer.kafka;
 
-import com.sun.jdi.event.ExceptionEvent;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
-import org.apache.kafka.common.serialization.Deserializer;
-import org.apache.kafka.common.serialization.StringDeserializer;
 import org.apache.kafka.common.serialization.UUIDDeserializer;
-import org.apache.kafka.common.serialization.UUIDSerializer;
 import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.kafka.annotation.EnableKafka;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
+import sarinxo.service.exceptionanalyzer.consumer.dto.ExceptionDto;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
 @Configuration
+@EnableKafka
 public class KafkaConfig {
 
     @Bean
@@ -30,7 +29,7 @@ public class KafkaConfig {
         config.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
         config.put(JsonDeserializer.TRUSTED_PACKAGES, "*");
 
-        return new DefaultKafkaConsumerFactory<UUID, ExceptionDto>(
+        return new DefaultKafkaConsumerFactory<>(
                 config,
                 new UUIDDeserializer(),
                 new JsonDeserializer<>(ExceptionDto.class)
