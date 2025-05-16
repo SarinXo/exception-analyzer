@@ -5,19 +5,22 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import sarinxo.service.exceptionanalyzer.security.dto.AssignRolesRequest;
+import sarinxo.service.exceptionanalyzer.security.dto.AssignTelegramRequest;
 import sarinxo.service.exceptionanalyzer.security.dto.CreateUserRequest;
 import sarinxo.service.exceptionanalyzer.security.dto.CreateUserResponse;
 import sarinxo.service.exceptionanalyzer.security.entity.AppRole;
 import sarinxo.service.exceptionanalyzer.security.entity.AppUser;
+import sarinxo.service.exceptionanalyzer.security.entity.TelegramUserId;
 import sarinxo.service.exceptionanalyzer.security.mapper.AppUserMapper;
 import sarinxo.service.exceptionanalyzer.security.repository.AppUserRepository;
 import sarinxo.service.exceptionanalyzer.security.service.AppRoleService;
 import sarinxo.service.exceptionanalyzer.security.service.AppUserService;
+import sarinxo.service.exceptionanalyzer.security.service.TelegramUserIdService;
 
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -27,11 +30,16 @@ public class AppUserDetailsServiceImpl implements AppUserService {
 
     private final AppUserRepository userRepository;
     private final AppRoleService roleService;
+    private final TelegramUserIdService telegramUserIdService;
     private final AppUserMapper mapper;
     private final PasswordEncoder passwordEncoder;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return findByUsernameOrElseThrow(username);
+    }
+
+    private AppUser findByUsernameOrElseThrow(String username) {
         return userRepository
                 .findUserByUsername(username)
                 .orElseThrow(
@@ -81,5 +89,17 @@ public class AppUserDetailsServiceImpl implements AppUserService {
 
         appUser.setAuthorities(finalRoles);
         userRepository.save(appUser);
+    }
+
+    @Override
+    @Transactional
+    public void assignTelegram(String username, AssignTelegramRequest request) {
+        TelegramUserId telegramInfo = telegramUserIdService.findByCode(request.getCode());
+
+        AppUser user = findByUsernameOrElseThrow(username);
+        user.setTelegramId(telegramInfo.getTelegramUserId());
+
+        userRepository.save(user);
+        telegramUserIdService.delete(telegramInfo.getCode());
     }
 }

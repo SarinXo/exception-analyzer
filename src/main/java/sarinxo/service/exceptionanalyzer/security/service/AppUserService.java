@@ -1,7 +1,9 @@
 package sarinxo.service.exceptionanalyzer.security.service;
 
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.transaction.annotation.Transactional;
 import sarinxo.service.exceptionanalyzer.security.dto.AssignRolesRequest;
+import sarinxo.service.exceptionanalyzer.security.dto.AssignTelegramRequest;
 import sarinxo.service.exceptionanalyzer.security.dto.CreateUserRequest;
 import sarinxo.service.exceptionanalyzer.security.dto.CreateUserResponse;
 
@@ -16,4 +18,7 @@ public interface AppUserService extends UserDetailsService {
     void delete(Long id);
 
     void assignRoles(AssignRolesRequest request);
+
+    @Transactional
+    void assignTelegram(String username, AssignTelegramRequest request);
 }

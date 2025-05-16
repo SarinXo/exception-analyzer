@@ -30,11 +30,7 @@ import java.util.List;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(
-        name = "app_user",
-        //todo Liquibase and remove it
-        indexes = @Index(name = "username_btree_index", columnList = "username")
-)
+@Table(name = "app_user")
 public class AppUser implements UserDetails {
 
     @Id
@@ -47,6 +43,9 @@ public class AppUser implements UserDetails {
     @Column(nullable = false)
     @ToString.Exclude
     private String password;
+
+    @Column(name = "telegram_id")
+    private Long telegramId;
 
     @ManyToMany(
             cascade =

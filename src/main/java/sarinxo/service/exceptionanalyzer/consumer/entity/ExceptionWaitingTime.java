@@ -8,8 +8,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,7 +17,6 @@ import lombok.Setter;
 import sarinxo.service.exceptionanalyzer.security.entity.AppUser;
 
 import java.time.LocalDateTime;
-import java.util.Set;
 
 @Entity
 @Getter
@@ -27,28 +24,22 @@ import java.util.Set;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "report")
-public class Report {
+@Table(name = "exception_waiting_time")
+public class ExceptionWaitingTime {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "report_text")
-    private String reportText;
+    @Column(name = "exception_happens_time")
+    private LocalDateTime exceptionHappensTime;
 
-    @Column(name = "created_at")
-    private LocalDateTime createdAt;
+    @Column(name = "exception_start_solving_time")
+    private LocalDateTime exceptionStartSolvingTime;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "debug_man")
     private AppUser debugMan;
-
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "debug_session")
-    private DebugSession debugSession;
-
-    @OneToMany
-    private Set<ExceptionInfo> exceptionInfos;
 
 }
