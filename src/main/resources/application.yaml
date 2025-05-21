@@ -11,6 +11,7 @@ spring:
     hibernate:
       #todo Liquibase and set validate
       ddl-auto: update
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
 
   datasource:
     #todo hide it. Now its dev
@@ -30,3 +31,11 @@ spring:
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       properties:
         spring.json.trusted.packages: "*"
+
+
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 5000
+        readTimeout: 5000

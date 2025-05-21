@@ -7,6 +7,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,7 +25,7 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "report")
+@Table(name = "exceptionInfo")
 public class ExceptionInfo {
 
     @Id
@@ -32,13 +33,13 @@ public class ExceptionInfo {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "stack_trace")
+    @Column(name = "stack_trace", columnDefinition = "text")
     private String stackTrace;
 
     @Column(name = "occurence_time")
     private LocalDateTime occurrenceTime;
 
-    @Column(name = "message")
+    @Column(name = "message", columnDefinition = "text")
     private String message;
 
     @Column(name = "additional_info")
